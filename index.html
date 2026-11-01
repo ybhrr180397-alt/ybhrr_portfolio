@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>晴空之外 · 一个可以探索的作品世界</title><meta name="theme-color" content="#a4dcf4"><style>
+*{box-sizing:border-box}body{margin:0;overflow:hidden;background:#a4dcf4;color:#173c58;font-family:Arial,'Microsoft YaHei',sans-serif}button{font:inherit;cursor:pointer;color:inherit}button:focus-visible{outline:3px solid #1b6aa3;outline-offset:5px}#world{display:block;width:100vw;height:100dvh;touch-action:none;cursor:grab}#world:active{cursor:grabbing}.ui{position:fixed;pointer-events:none;z-index:2}.ui button,.ui a{pointer-events:auto}header{inset:30px 38px auto;display:flex;justify-content:space-between;align-items:start}.brand{display:flex;gap:12px;align-items:center}.brand-icon{width:42px;height:42px;border:1px solid #ffffffb0;border-radius:14px;display:grid;place-items:center;background:#f5fcff70;font-size:28px;box-shadow:0 5px 18px #427d9e0b}.brand strong{font-size:17px;letter-spacing:3px;font-weight:500}.brand small{display:block;font-size:8px;letter-spacing:2.6px;margin-top:7px;opacity:.6}.top-actions{display:flex;gap:10px}.glass{background:#f7fcff8c;border:1px solid #ffffffbc;backdrop-filter:blur(18px);box-shadow:0 5px 25px #386a8b0b;border-radius:14px}.top-actions button{height:42px;padding:0 16px;font-size:11px;display:flex;align-items:center;gap:9px}.top-actions .day-icon{font-size:19px}.intro{left:40px;top:128px;max-width:330px}.intro .tiny{font-size:9px;letter-spacing:3px;opacity:.55;margin-bottom:13px}.intro h1{font-size:clamp(26px,2.8vw,36px);font-weight:400;letter-spacing:1px;line-height:1.45;margin:0}.intro h1 em{font-style:normal;color:#2d85b5}.intro p{font-size:11px;line-height:1.9;opacity:.65;margin:13px 0 0}.intro .coord{font-family:monospace;font-size:9px;opacity:.4;margin-top:20px;letter-spacing:1px}.right-note{right:39px;top:132px;display:flex;align-items:center;gap:9px;font-size:9px;letter-spacing:1px;opacity:.65}.right-note i{width:5px;height:5px;background:#2c9d92;border-radius:50%}.bottom{bottom:28px;left:36px;right:36px;display:flex;justify-content:space-between;align-items:end;gap:15px}.status{padding:16px 19px;width:205px}.status>div:first-child{display:flex;justify-content:space-between;font-size:9px;letter-spacing:1px}.progress{height:3px;background:#d5e6ee;margin-top:12px;border-radius:5px}.progress i{display:block;height:100%;background:#3e93bd;width:0;transition:width .5s}.status p{font-size:9px;opacity:.6;margin:10px 0 0}.controls{padding:12px 20px;font-size:10px;line-height:1.9;display:flex;align-items:center;gap:15px}.key{display:inline-flex;justify-content:center;align-items:center;min-width:22px;height:22px;border:1px solid #a2bfce;border-radius:6px;font:9px monospace;margin-right:5px}.controls span{white-space:nowrap}.map-button{height:46px;padding:0 18px;border-radius:14px;display:flex;align-items:center;gap:10px;font-size:10px}.map-button b{font-size:18px;font-weight:400}.credits{position:fixed;right:39px;bottom:91px;font-size:8px;letter-spacing:2px;opacity:.45;pointer-events:none}.hint{position:fixed;left:50%;top:90px;transform:translateX(-50%) translateY(-10px);opacity:0;pointer-events:none;padding:12px 22px;border-radius:40px;background:#163e58d9;color:#fff;font-size:11px;z-index:4;transition:.3s;white-space:nowrap}.hint.show{opacity:1;transform:translateX(-50%) translateY(0)}#labels{position:fixed;inset:0;pointer-events:none;z-index:1}.place-label{position:absolute;transform:translate(-50%,-100%);pointer-events:auto;border:1px solid #fff9;background:#f9fdffdf;backdrop-filter:blur(12px);border-radius:13px;box-shadow:0 5px 16px #34719113;padding:10px 14px;white-space:nowrap;display:flex;align-items:center;gap:13px;transition:background .2s,box-shadow .2s}.place-label:hover{background:white;box-shadow:0 6px 25px #34719135}.place-label .label-dot{height:6px;width:6px;border-radius:50%;background:#3e9ed2;box-shadow:0 0 0 4px #3e9ed218}.place-label.visited .label-dot{background:#65a98d}.place-label strong{font-size:11px;font-weight:500}.place-label small{font-size:8px;opacity:.5;margin-left:8px}.place-label .arrow{font-size:13px;color:#4383a6}.place-label:after{content:'';position:absolute;left:50%;top:100%;height:16px;border-left:1px dashed #567f9990}.map-panel{right:36px;bottom:87px;width:235px;padding:20px;pointer-events:auto}.map-panel .map-heading{font-size:9px;letter-spacing:2px;display:flex;justify-content:space-between;margin-bottom:10px}.map-panel button{display:block;width:100%;text-align:left;background:none;border:0;border-top:1px solid #c3d9e3;padding:12px 0;font-size:11px}.map-panel button span{float:right;color:#6697af;font-size:9px}.map-panel p{font-size:9px;line-height:1.8;opacity:.6;margin-bottom:0}[hidden]{display:none!important}dialog{border:1px solid #fff9;border-radius:25px;padding:0;width:min(790px,92vw);max-height:86dvh;background:#f5fbfe;color:#23485e;box-shadow:0 30px 100px #0b3c6c40}dialog::backdrop{background:#15385055;backdrop-filter:blur(14px)}.panel-top{display:flex;justify-content:space-between;align-items:center;padding:23px 30px;border-bottom:1px solid #d8e8f0;position:sticky;top:0;background:#f5fbfef0;z-index:3}.panel-top span{font-size:9px;letter-spacing:2px;opacity:.6}.close{border:1px solid #c4dce7;background:white;border-radius:50%;height:32px;width:32px;font-size:20px}.panel-body{padding:30px}.panel-eyebrow{font-size:9px;letter-spacing:2px;color:#6098b9}.panel-body h2{font-size:32px;font-weight:400;letter-spacing:1px;margin:12px 0 16px}.panel-desc{font-size:12px;line-height:2;color:#6d899b;max-width:570px}.placeholder-note{font-size:10px;border-top:1px solid #d6e6ee;margin-top:25px;padding-top:18px;color:#7993a3;line-height:1.8}.project-list{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:27px}.project-tile{background:#e5f1f8;border:1px solid #d4e7f1;border-radius:15px;padding:18px;min-height:145px;position:relative;overflow:hidden;cursor:pointer;text-align:left}.project-tile:hover{background:#d6eaf5}.project-tile>small{font-size:8px;letter-spacing:1px;color:#7595aa}.project-tile h3{font-size:17px;font-weight:400;position:relative;z-index:1;margin:30px 0 5px}.project-tile p{font-size:10px;margin:0;color:#7093a8}.project-tile .tile-art{position:absolute;right:15px;top:16px;font-size:48px;color:#6baed5;opacity:.5}.detail-blocks{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:25px}.detail-blocks>div{border-top:1px solid #cce1ed;padding-top:15px}.detail-blocks h3{font-size:12px;font-weight:500}.detail-blocks p{font-size:11px;line-height:1.9;color:#7890a0}.timeline-row{padding:20px 0;border-bottom:1px solid #d5e6ef;display:grid;grid-template-columns:90px 1fr;gap:16px}.timeline-row>span{font-size:9px;color:#7d9bab;padding-top:4px}.timeline-row h3{font-size:15px;font-weight:400;margin:0 0 9px}.timeline-row p{font-size:11px;line-height:1.8;color:#7c95a5;margin:0}.back-link{border:0;background:none;color:#4e91b8;padding:0;font-size:11px;margin-bottom:25px}.contact-card{padding:23px;background:#e8f3fa;border-radius:15px;margin-top:25px;font-size:12px;line-height:2}.night{color:#d8edff}.night .glass{background:#1639559c;border-color:#81b5d438}.night .intro h1 em{color:#8dd4ff}.night .place-label{background:#224966ed;color:#e5f5ff;border-color:#75a3c66b}.night .place-label:hover{background:#315d80}.night .status .progress{background:#315c7c}.night .brand-icon{background:#325a7377;border-color:#8baab577}.night .map-panel button{border-color:#7796b333}.night .right-note i{background:#a4d8af}#loading{position:fixed;inset:0;background:#b5e4f8;display:grid;place-items:center;z-index:10;transition:opacity .5s;pointer-events:none}#loading span{font-size:12px;letter-spacing:5px}#loading.done{opacity:0}@media(max-width:700px){header{inset:20px 20px auto}.brand strong{font-size:14px;letter-spacing:2px}.brand small{font-size:7px}.brand-icon{width:36px;height:36px;font-size:24px}.top-actions button{height:36px;padding:0 12px;font-size:10px}.top-actions .help-text{display:none}.intro{left:23px;top:104px;max-width:320px}.intro h1{font-size:26px}.intro p{font-size:10px}.intro .tiny{font-size:8px}.intro .coord{display:none}.right-note{display:none}.bottom{left:20px;right:20px;bottom:20px;align-items:end}.status{padding:12px 14px;width:165px}.status p{font-size:8px}.controls{display:none}.map-button{height:43px;padding:0 13px}.credits{right:22px;bottom:79px;font-size:6px}.place-label{padding:8px 10px;gap:7px;border-radius:10px}.place-label strong{font-size:9px}.place-label small{display:none}.place-label .arrow{font-size:11px}.place-label .label-dot{width:5px;height:5px}.map-panel{right:20px;bottom:75px}.panel-body{padding:24px}.panel-body h2{font-size:26px}.panel-top{padding:18px 23px}.project-list{grid-template-columns:1fr}.detail-blocks{grid-template-columns:1fr}.hint{font-size:10px;max-width:90%;white-space:normal;text-align:center;top:74px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+.panel-actions{display:flex;gap:12px;align-items:center}.panel-language{border:1px solid #c4dce7;border-radius:20px;background:transparent;padding:8px 12px;font-size:10px;color:#476d86}.project-role{font-size:11px;color:#4d92b9;margin:-5px 0 20px}.contact-card a{color:#257fa9;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.timeline-row{grid-template-columns:122px 1fr}.timeline-row>span{line-height:1.7}.intro{max-width:365px}html[lang="en"] .intro h1{font-size:clamp(26px,2.8vw,36px);line-height:1.25}html[lang="en"] .intro p{max-width:300px}html[lang="en"] .place-label strong{font-size:10px}html[lang="en"] .status{width:230px}html[lang="en"] .status p{font-size:8px}#loading{background:#21476b;color:#d8edff}#thanks{width:min(570px,91vw);text-align:center;background:radial-gradient(ellipse at 50% 0%,#3e7197,#173c5a 78%);color:#e5f2ff;padding:35px 35px 30px;border:1px solid #82b9df50;overflow:hidden}#thanks::backdrop{background:#0d294c7a;backdrop-filter:blur(12px)}.thanks-top{position:absolute;top:17px;right:17px;display:flex;gap:9px;align-items:center}#thanks .close,#thanks .panel-language{color:#c3e4fa;border-color:#83b5d34f;background:transparent}.thanks-stars{font-size:28px;color:#a9dafa;margin:26px 0 25px;letter-spacing:20px;padding-left:20px}.thanks-stars span{font-size:55px;color:#f5e2aa;display:inline-block;vertical-align:middle;text-shadow:0 0 35px #efdba366}#thanks-kicker{font-size:9px;letter-spacing:2px;color:#a3c6de}#thanks-title{font-size:34px;line-height:1.5;font-weight:400;margin:18px 0}#thanks-message{font-size:12px;line-height:2.2;color:#bad0e3;margin:18px auto 26px;max-width:420px}#continue{border:1px solid #b4d7ec7a;border-radius:30px;background:#d3eafb;color:#214966;padding:14px 28px;display:inline-flex;align-items:center;gap:32px;font-size:12px}#continue:hover{background:#f1faff}#thanks-signature{font-size:9px;color:#89aec8;margin-top:29px;letter-spacing:1px}@media(max-width:700px){.brand{gap:8px}.brand strong{font-size:13px;letter-spacing:1px}.brand small{font-size:6px;letter-spacing:1px}.top-actions{gap:6px}.top-actions button{padding:0 10px}.top-actions .day-icon{font-size:15px}.intro{max-width:330px}.intro h1{font-size:26px}html[lang="en"] .brand strong{font-size:12px}html[lang="en"] .brand small{font-size:5px;letter-spacing:.6px}html[lang="en"] .intro h1{font-size:29px}html[lang="en"] .status{width:186px}html[lang="en"] .place-label{padding:8px;gap:6px}html[lang="en"] .place-label strong{font-size:8px}.timeline-row{grid-template-columns:86px 1fr}#thanks{padding:30px 22px 24px}#thanks-title{font-size:28px}#thanks-message{font-size:11px}.thanks-stars{margin:30px 0 20px}}
+
+.work-filters{display:flex;gap:8px;flex-wrap:wrap;margin:25px 0 5px}.work-filters button{border:1px solid #cbdfe9;background:transparent;border-radius:22px;padding:9px 13px;font-size:10px;color:#4c738c}.work-filters button[aria-pressed="true"]{background:#285674;color:#fff;border-color:#285674}.work-filters small{margin-left:5px;opacity:.65}.project-tile.has-cover{padding:0 0 18px;background:#eaf3f8}.project-tile.has-cover>small,.project-tile.has-cover>h3,.project-tile.has-cover>p{margin-left:18px;margin-right:18px;display:block}.project-tile.has-cover>small{margin-top:17px}.project-tile.has-cover>h3{margin-top:10px}.project-tile>.art-image{height:175px;aspect-ratio:auto!important;background:#dce9f0;display:flex;align-items:center;justify-content:center}.project-tile>.art-image img{width:100%;height:100%;object-fit:contain}.art-image{display:block;position:relative;overflow:hidden}.art-image img{display:block;width:100%;height:auto}.art-crop{width:100%;position:relative}.project-tile>.art-crop{height:auto;aspect-ratio:1.36!important}.project-tile>.art-crop img{object-fit:initial}.project-gallery{margin-top:30px}.project-gallery figure{margin:0 0 28px}.image-enlarge{display:block;width:100%;padding:0;border:1px solid #d7e4eb;border-radius:12px;overflow:hidden;position:relative;background:#e1edf3}.image-enlarge img{max-height:none}.zoom-hint{position:absolute;right:12px;bottom:12px;background:#183c60d9;color:#fff;border-radius:20px;padding:8px 12px;font-size:10px;opacity:0;transition:opacity .2s}.image-enlarge:hover .zoom-hint,.image-enlarge:focus-visible .zoom-hint{opacity:1}.project-gallery video{display:block;width:100%;max-height:65vh;background:#132d42;border-radius:12px}.project-gallery figcaption{display:flex;gap:12px;font-size:11px;line-height:1.8;color:#66869a;margin-top:12px}.project-gallery figcaption span{opacity:.5;font-family:monospace}#art-viewer{width:min(1250px,96vw);max-height:94dvh;background:#142f45;padding:48px 20px 15px;border-color:#ffffff33;color:#d3e8f5}#art-viewer>.close{position:fixed;right:4vw;top:5vh;z-index:5;background:#eaf7ff;color:#27485d}.art-view-content{max-width:1100px;margin:auto}.art-view-content .art-image{max-width:100%;margin:auto}.art-view-content p{text-align:center;font-size:11px;margin:15px 0 0}.art-view-content .art-crop{max-width:1000px}.detail-blocks:empty{display:none}@media(max-width:700px){.project-tile>.art-image{height:190px}.zoom-hint{opacity:1}.work-filters button{padding:8px 11px;font-size:9px}#art-viewer{padding:45px 10px 15px}}
+.source-documents{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0}.source-documents a{display:block;border:1px solid #cbdfe9;border-radius:18px;padding:10px 14px;text-decoration:none;color:#315b72;font-size:11px}.source-documents a:hover{background:#dfedf5}.project-links{margin:24px 0 30px}.project-links a{display:inline-flex;align-items:center;gap:28px;padding:14px 20px;border-radius:24px;background:#285674;color:#fff;text-decoration:none;font-size:12px;transition:background .2s,transform .2s}.project-links a:hover{background:#397b9b;transform:translateY(-2px)}.project-links a:focus-visible{outline:3px solid #68b6df;outline-offset:4px}#bgm-toggle{width:42px;min-width:42px;padding:0;justify-content:center;position:relative}#bgm-toggle[aria-pressed="true"]{border-color:#85d4ee;background:#d8f3ff;color:#245b78;box-shadow:0 0 18px #a2ddf52b}.music-bars{display:none;align-items:center;gap:3px;height:20px}.music-bars i{display:block;width:2px;height:12px;background:currentColor;border-radius:3px;animation:music-wave 1.2s ease-in-out infinite}.music-bars i:nth-child(2){height:19px;animation-delay:-.3s}.music-bars i:nth-child(3){height:15px;animation-delay:-.6s}.music-bars i:nth-child(4){height:9px;animation-delay:-.9s}#bgm-toggle[aria-pressed="true"] .music-note{display:none}#bgm-toggle[aria-pressed="true"] .music-bars{display:flex}#bgm-toggle:disabled{cursor:wait}@keyframes music-wave{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}@media(prefers-reduced-motion:reduce){.music-bars i{animation:none}}@media(max-width:700px){.top-actions{gap:6px}#bgm-toggle{width:36px;min-width:36px}}</style></head><body class="night">
+<div id="loading"><span>正在抵达晴空之外 · · ·</span></div><canvas id="world" aria-label="云端浮岛作品集。可点击场景中的地点，或使用右下角地图导航。"></canvas>
+<header class="ui"><div class="brand"><div class="brand-icon">✧</div><div><strong>晴空之外</strong><small>AN EXPLORABLE PORTFOLIO</small></div></div><div class="top-actions"><button class="glass language-toggle" aria-label="Switch to English">EN</button><button id="bgm-toggle" class="glass" aria-label="开启背景音乐" title="开启背景音乐" aria-pressed="false"><svg class="music-note" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17V5l11-2v12M9 8l11-2"/><ellipse cx="6" cy="17.5" rx="3" ry="2.5"/><ellipse cx="17" cy="15.5" rx="3" ry="2.5"/></svg><span class="music-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button><button id="day" class="glass" aria-label="切换到夜晚"><span class="day-icon">☀</span><span id="day-text">日间</span></button><button id="help" class="glass"><span>?</span><span class="help-text">怎么玩</span></button></div></header><audio id="bgm" src="过往作品/网站音频/晴空之外.wav?v=gentle-bright-3" loop preload="none"></audio>
+<div class="intro ui"><div class="tiny">WELCOME TO MY LITTLE UNIVERSE</div><h1>暂时离开地面，<br>来我的<em>想象里</em>逛逛。</h1><p>作品在水面漂浮，故事在岛屿之间生长。<br>点击一个地点，开始你的探索。</p><div class="coord">SKY ISLAND / 32°N · ∞°E</div></div><div class="right-note ui"><i></i> 你的名字的世界 · 结构预览</div>
+<div id="labels"></div><div id="toast" class="hint" role="status"></div>
+<div class="bottom ui"><div class="status glass"><div><span>探索进度</span><span id="count">0 / 5</span></div><div class="progress"><i id="progress"></i></div><p id="progress-note">五个地点，五种认识我的方式。</p></div><div class="controls glass"><span>点击地面 · 漫步</span><span>点击浮标 · 探索 ↗</span></div><button class="map-button glass" id="map-toggle" aria-expanded="false"><b>⌘</b> 探索地图</button></div>
+<div class="credits">BUILT FROM CURIOSITY. NOT GRAVITY.</div><aside id="map" class="map-panel glass ui" hidden><div class="map-heading"><span>ISLAND DIRECTORY</span><span>↗</span></div><div id="map-links"></div><p>也可以按 Tab 选择地点，回车进入。<br>点击草地，让小小的我散散步。</p></aside>
+<dialog id="panel" aria-labelledby="panel-title"><div class="panel-top"><span id="panel-location">SKY ISLAND / ARCHIVE</span><div class="panel-actions"><button class="language-toggle panel-language" aria-label="Switch to English">EN</button><button class="close" id="close" aria-label="返回岛屿">×</button></div></div><div id="panel-content" class="panel-body"></div></dialog>
+<dialog id="thanks" aria-labelledby="thanks-title"><div class="thanks-top"><button class="language-toggle panel-language">EN</button><button class="close" id="thanks-close" aria-label="继续探索">×</button></div><div class="thanks-stars" aria-hidden="true">✧ <span>✦</span> ✧</div><p id="thanks-kicker"></p><h2 id="thanks-title"></h2><p id="thanks-message"></p><button id="continue"></button><p id="thanks-signature"></p></dialog><dialog id="art-viewer" aria-label="作品大图"><button class="close" aria-label="关闭大图" onclick="this.closest('dialog').close()">×</button><div class="art-view-content"></div></dialog><script>
+
+// 个人资料依据同目录的《杨博涵-中文简历.docx》整理。图片与项目外链待补充。
+let lang='zh';
+const tr=(zh,en)=>lang==='zh'?zh:en;
+const bi=(value)=>typeof value==='string'?value:value[lang];
+const PROFILE={name:{zh:'杨博涵',en:'Bohan Yang'},email:'ybhrr180397@icloud.com',phone:'+86 158-1138-0397'};
+const places=[
+{id:'works',name:{zh:'灵感漂流池',en:'The Idea Pool'},en:'SELECTED WORKS',x:-60,z:-80,h:70,number:'01'},
+{id:'about',name:{zh:'好奇心小屋',en:'The Curiosity Cabin'},en:'ABOUT ME',x:290,z:-130,h:160,number:'02'},
+{id:'journey',name:{zh:'成长观测台',en:'The Journey Lookout'},en:'MY JOURNEY',x:-335,z:-140,h:130,number:'03'},
+{id:'lab',name:{zh:'未完成实验室',en:'The Possibility Lab'},en:'PLAYGROUND',x:170,z:235,h:80,number:'04'},
+{id:'contact',name:{zh:'来信码头',en:'The Letter Dock'},en:'SAY HELLO',x:-260,z:230,h:75,number:'05'}];
+const projects=[
+  {
+    "name": {
+      "zh": "共生之境 · 屋顶花园自主调研",
+      "en": "The Realm of Symbiosis · Rooftop Gardens"
+    },
+    "category": "research",
+    "type": {
+      "zh": "自主调研 / 空间设计",
+      "en": "RESEARCH"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "创作档案",
+      "en": "CREATIVE ARCHIVE"
+    },
+    "role": {
+      "zh": "自主调研 · 美丽中国一等奖",
+      "en": "Independent Research · Beautiful China First Prize"
+    },
+    "desc": {
+      "zh": "从自然与人文在屋顶花园中的融合出发，探索感官体验、空间策略与种植系统。",
+      "en": "An independent investigation into the integration of nature and humanity in rooftop gardens, exploring sensory experience, spatial strategies and planting systems."
+    },
+    "media": [
+      {
+        "file": "花园1.jpg",
+        "caption": {
+          "zh": "研究总览与设计概念",
+          "en": "Research overview and concept"
+        }
+      },
+      {
+        "file": "花园2.jpg",
+        "caption": {
+          "zh": "空间生成与策略",
+          "en": "Spatial strategies"
+        }
+      },
+      {
+        "file": "花园3.jpg",
+        "caption": {
+          "zh": "种植系统与剖面",
+          "en": "Planting system and section"
+        }
+      },
+      {
+        "file": "花园4.jpg",
+        "caption": {
+          "zh": "不同主题的花园构想",
+          "en": "Thematic garden concepts"
+        }
+      },
+      {
+        "file": "花园5.jpg",
+        "caption": {
+          "zh": "感官体验设计",
+          "en": "Sensory experience"
+        }
+      },
+      {
+        "file": "花园手绘.jpg",
+        "caption": {
+          "zh": "手绘空间推演",
+          "en": "Hand-drawn spatial study"
+        }
+      }
+    ],
+    "blocks": [
+      [
+        {
+          "zh": "研究切入",
+          "en": "Research focus"
+        },
+        {
+          "zh": "屋顶空间中自然与人文的共生关系。",
+          "en": "The relationship between nature and people in rooftop spaces."
+        }
+      ],
+      [
+        {
+          "zh": "设计表达",
+          "en": "Design approach"
+        },
+        {
+          "zh": "以感官体验、主题花园、空间策略、种植剖面与手绘串联调研和设计表达。",
+          "en": "Connecting the study through sensory experiences, thematic gardens, spatial strategies, planting sections and hand sketches."
+        }
+      ],
+      [
+        {
+          "zh": "项目荣誉",
+          "en": "Award"
+        },
+        {
+          "zh": "获“美丽中国”赛道一等奖。",
+          "en": "Awarded First Prize in the Beautiful China track."
+        }
+      ]
+    ]
+  },
+  {
+    "name": {
+      "zh": "桂灵 GuiLing · 原创IP设计",
+      "en": "GuiLing · Original Character Design"
+    },
+    "category": "visual",
+    "type": {
+      "zh": "角色设计 / IP / 视觉应用",
+      "en": "VISUAL"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "创作档案",
+      "en": "CREATIVE ARCHIVE"
+    },
+    "role": {
+      "zh": "课程小组创作 · 参与设计",
+      "en": "Course group project · Design contribution"
+    },
+    "desc": {
+      "zh": "以苏州地域意象与桂花、蟹元素构建角色，呈现从概念、草图、三视图到表情、服装和衍生应用的设计过程。",
+      "en": "A character built around Suzhou, osmanthus and crab motifs, presented through concepts, sketches, turnarounds, expressions, costumes and applications."
+    },
+    "media": [
+      {
+        "file": "IP设计.png",
+        "caption": {
+          "zh": "桂灵角色设定与应用展板",
+          "en": "GuiLing character and application board"
+        }
+      }
+    ],
+    "blocks": []
+  },
+  {
+    "name": {
+      "zh": "交互广告 · Processing × AE",
+      "en": "Interactive Advertisement · Processing × AE"
+    },
+    "category": "motion",
+    "type": {
+      "zh": "交互影像 / 创意编程 / 动效",
+      "en": "MOTION"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "创作档案",
+      "en": "CREATIVE ARCHIVE"
+    },
+    "role": {
+      "zh": "杨博涵 · 创作作品",
+      "en": "Bohan Yang · Creative work"
+    },
+    "desc": {
+      "zh": "以饮品广告为视觉载体，结合Processing与After Effects完成交互影像探索。制作过程与最终视频在这里一起呈现。",
+      "en": "An interactive moving-image exploration combining Processing and After Effects through a beverage advertisement, showing both the process and the final video."
+    },
+    "media": [
+      {
+        "file": "交互广告.mp4",
+        "caption": {
+          "zh": "交互广告成片",
+          "en": "Final interactive advertisement"
+        },
+        "video": true,
+        "poster": "过程2.jpg"
+      },
+      {
+        "file": "过程1.jpg",
+        "caption": {
+          "zh": "Processing制作过程",
+          "en": "Processing development process"
+        }
+      },
+      {
+        "file": "过程2.jpg",
+        "caption": {
+          "zh": "After Effects制作过程",
+          "en": "After Effects production process"
+        }
+      }
+    ],
+    "blocks": [
+      [
+        {
+          "zh": "创意编程",
+          "en": "Creative coding"
+        },
+        {
+          "zh": "Processing中的视觉生成与交互制作过程。",
+          "en": "Visual and interaction development in Processing."
+        }
+      ],
+      [
+        {
+          "zh": "影像合成",
+          "en": "Compositing"
+        },
+        {
+          "zh": "After Effects中的画面组织与动效制作过程。",
+          "en": "Visual composition and motion production in After Effects."
+        }
+      ]
+    ]
+  },
+  {
+    "name": {
+      "zh": "AE片头 · 动态影像",
+      "en": "AE Opening · Motion Sequence"
+    },
+    "category": "motion",
+    "type": {
+      "zh": "After Effects / 片头设计",
+      "en": "MOTION"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "创作档案",
+      "en": "CREATIVE ARCHIVE"
+    },
+    "role": {
+      "zh": "杨博涵 · 创作作品",
+      "en": "Bohan Yang · Creative work"
+    },
+    "desc": {
+      "zh": "一段以After Effects制作的片头动态影像。",
+      "en": "An opening motion sequence created in After Effects."
+    },
+    "media": [
+      {
+        "file": "AE片头.mp4",
+        "caption": {
+          "zh": "片头成片",
+          "en": "Opening sequence"
+        },
+        "video": true,
+        "poster": "AE片头封面.png"
+      }
+    ],
+    "blocks": []
+  },
+  {
+    "name": {
+      "zh": "影像创作 · Flame短片画面",
+      "en": "Film Practice · Flame Frames"
+    },
+    "category": "motion",
+    "type": {
+      "zh": "摄影 / 影像叙事",
+      "en": "MOTION"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "创作档案",
+      "en": "CREATIVE ARCHIVE"
+    },
+    "role": {
+      "zh": "杨博涵 · 创作作品",
+      "en": "Bohan Yang · Creative work"
+    },
+    "desc": {
+      "zh": "以场景、人物、光影与细节构成短片的视觉叙事，以下展示作品画面与片尾信息。",
+      "en": "A visual narrative through scenes, characters, light and detail, presented through film frames and credits."
+    },
+    "media": [
+      {
+        "file": "摄影1.png",
+        "caption": {
+          "zh": "短片画面 1",
+          "en": "Film frame 1"
+        }
+      },
+      {
+        "file": "摄影2.png",
+        "caption": {
+          "zh": "短片画面 2",
+          "en": "Film frame 2"
+        }
+      },
+      {
+        "file": "摄影3.png",
+        "caption": {
+          "zh": "短片画面 3",
+          "en": "Film frame 3"
+        }
+      },
+      {
+        "file": "摄影4.png",
+        "caption": {
+          "zh": "短片画面 4",
+          "en": "Film frame 4"
+        }
+      },
+      {
+        "file": "摄影6.png",
+        "caption": {
+          "zh": "短片画面 5",
+          "en": "Film frame 5"
+        }
+      },
+      {
+        "file": "摄影5.png",
+        "caption": {
+          "zh": "片尾信息",
+          "en": "Film credits"
+        }
+      }
+    ],
+    "blocks": []
+  },
+  {
+    "name": {
+      "zh": "产品册与研究海报 · 版式设计",
+      "en": "Product Brochure & Research Posters"
+    },
+    "category": "visual",
+    "type": {
+      "zh": "信息设计 / 产品传播 / 版式",
+      "en": "VISUAL"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "创作档案",
+      "en": "CREATIVE ARCHIVE"
+    },
+    "role": {
+      "zh": "杨博涵 · 创作作品",
+      "en": "Bohan Yang · Creative work"
+    },
+    "desc": {
+      "zh": "围绕智能固定资产盘点系统制作产品册，并通过海报组织系统架构、产品展示和研究信息。海报素材另包含青年网络内容过滤主题。",
+      "en": "A product brochure for an intelligent fixed-asset inventory system, plus posters organising system, product and research information. The poster material also includes a youth online-content filtering study."
+    },
+    "media": [
+      {
+        "file": "产品册.jpg",
+        "caption": {
+          "zh": "智能固定资产盘点系统产品册",
+          "en": "Intelligent fixed-asset inventory system brochure"
+        }
+      },
+      {
+        "file": "海报.png",
+        "caption": {
+          "zh": "系统与研究主题海报",
+          "en": "System and research posters"
+        }
+      }
+    ],
+    "blocks": []
+  },
+  {
+    "name": {
+      "zh": "油画 01 · 雪地与晚霞",
+      "en": "Oil Painting 01 · Snow & Sunset"
+    },
+    "category": "painting",
+    "type": {
+      "zh": "油画 / 风景",
+      "en": "PAINTING"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "风景习作",
+      "en": "LANDSCAPE STUDY"
+    },
+    "role": {
+      "zh": "杨博涵 · 创作作品",
+      "en": "Bohan Yang · Creative work"
+    },
+    "desc": {
+      "zh": "以暖色晚霞与冷色雪地的对照，描绘开阔冬景中的光线与人物。",
+      "en": "Warm sunset colours meet cool snow in an open winter landscape with small human figures."
+    },
+    "media": [
+      {
+        "file": "油画.png",
+        "caption": {
+          "zh": "雪地与晚霞",
+          "en": "Snow & Sunset"
+        },
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "w": 665,
+          "h": 498,
+          "fullW": 1370,
+          "fullH": 498
+        }
+      }
+    ],
+    "blocks": []
+  },
+  {
+    "name": {
+      "zh": "油画 02 · 海浪与岸",
+      "en": "Oil Painting 02 · Waves & Shore"
+    },
+    "category": "painting",
+    "type": {
+      "zh": "油画 / 风景",
+      "en": "PAINTING"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "风景习作",
+      "en": "LANDSCAPE STUDY"
+    },
+    "role": {
+      "zh": "杨博涵 · 创作作品",
+      "en": "Bohan Yang · Creative work"
+    },
+    "desc": {
+      "zh": "通过蓝色层次与白色浪花，表现海浪的运动、质感与岸边的节奏。",
+      "en": "Layers of blue and white foam convey the movement and texture of waves along the shore."
+    },
+    "media": [
+      {
+        "file": "油画.png",
+        "caption": {
+          "zh": "海浪与岸",
+          "en": "Waves & Shore"
+        },
+        "crop": {
+          "x": 666,
+          "y": 0,
+          "w": 704,
+          "h": 498,
+          "fullW": 1370,
+          "fullH": 498
+        }
+      }
+    ],
+    "blocks": []
+  },
+  {
+    "name": {
+      "zh": "The Chair · 六把椅子的展览",
+      "en": "The Chair · An Exhibition in Six Chairs"
+    },
+    "type": {
+      "zh": "展览策划 / 空间叙事 / 视觉物料",
+      "en": "EXHIBITION / SPATIAL NARRATIVE / VISUAL DESIGN"
+    },
+    "icon": "◉",
+    "date": {
+      "zh": "2026 · 展览档案",
+      "en": "2026 · EXHIBITION ARCHIVE"
+    },
+    "role": {
+      "zh": "项目负责人 · 全套展览物料独立设计",
+      "en": "Project Lead · Sole Designer of Exhibition Materials"
+    },
+    "desc": {
+      "zh": "一把椅子，是等待，也是观看。从脱发这一细微而私密的身体变化出发，以六把椅子串联身体、凝视与科学之间的关系，邀请观众思考：一个人如何被看见、被判断、被理解，又如何保有自己的尊严。",
+      "en": "A chair is a place of waiting and a position from which to see. Beginning with the intimate experience of hair loss, six chairs trace relationships between the body, the gaze and science, asking how a person is seen, judged and understood—and how their dignity can be preserved."
+    },
+    "blocks": [
+      [
+        {
+          "zh": "01—03 / 从镜子到屏幕",
+          "en": "01–03 / From mirror to screen"
+        },
+        {
+          "zh": "镜前椅、理发椅、屏幕椅：由自我凝视进入他者目光，再走向搜索、广告与社交媒体中的信息洪流，呈现身体变化如何成为被观看、比较和放大的经验。",
+          "en": "The mirror, barber and screen chairs move from self-scrutiny to the gaze of others, then into search, advertising and social media: the ways a bodily change becomes an experience of being observed, compared and amplified."
+        }
+      ],
+      [
+        {
+          "zh": "04—06 / 从候诊到沉默",
+          "en": "04–06 / From waiting to silence"
+        },
+        {
+          "zh": "候诊椅、实验室椅、空椅子：从等待被承认，到被数据与模型解释，最后为尚未说出的感受留下位置，也为选择沉默的人保留尊严。",
+          "en": "The waiting-room chair, laboratory chair and empty chair move from seeking recognition to the language of data and models, before leaving space for unspoken feelings and the dignity of choosing silence."
+        }
+      ],
+      [
+        {
+          "zh": "设计职责 / 由我独立完成",
+          "en": "Design responsibility / Independently designed"
+        },
+        {
+          "zh": "本页展示的 The Chair 全套展览物料均由我独立完成设计，包括主视觉、宣传图、导语与结语展板、策展说明与概念图，以及 A5 观众回执单。",
+          "en": "I independently designed all The Chair exhibition materials shown here: the key visual, promotional graphic, opening and closing panels, curatorial statement and concept board, and A5 visitor response card."
+        }
+      ],
+      [
+        {
+          "zh": "观众参与 / 留下与不留下",
+          "en": "Participation / To share or remain silent"
+        },
+        {
+          "zh": "回执单在入场前邀请观众选择自己与脱发议题的距离，在离场时留下经历、困惑或一句话；也允许观众不说明、不署名，以自己的方式靠近展览。",
+          "en": "Before entering, visitors can indicate their relationship to hair loss. At the end, the reverse of the card offers room for an experience, a question or a sentence. Choosing not to explain or sign is equally welcome."
+        }
+      ],
+      [
+        {
+          "zh": "展览延伸 / 空间与网页",
+          "en": "Beyond the exhibition / Space and web"
+        },
+        {
+          "zh": "将六把椅子的空间叙事转化为可在线探索的数字展览。通过“访问线上展览”入口进入；本页视频呈现实地展览全貌，平面物料可逐张放大查看。",
+          "en": "The spatial narrative of six chairs becomes an online exhibition to explore. Use the exhibition link to visit; the video on this page presents the physical exhibition, while each design artifact can be enlarged."
+        }
+      ]
+    ],
+    "category": "web",
+    "media": [
+      {
+        "file": "3e125b79fe2b94045d8824a9a9380f1d.jpg",
+        "caption": {
+          "zh": "The Chair · 展览主视觉",
+          "en": "The Chair · Exhibition key visual"
+        }
+      },
+      {
+        "file": "The Chair.mp4",
+        "caption": {
+          "zh": "展览全貌视频",
+          "en": "Full exhibition overview"
+        },
+        "video": true,
+        "poster": "3e125b79fe2b94045d8824a9a9380f1d.jpg"
+      },
+      {
+        "file": "网页预览/The-Chair-导语-1.jpg",
+        "caption": {
+          "zh": "导语展板 · 进入六种处境",
+          "en": "Opening panel · Entering six perspectives"
+        }
+      },
+      {
+        "file": "网页预览/The-Chair-策展与概念-2.jpg",
+        "caption": {
+          "zh": "六把椅子 · 展览空间概念图",
+          "en": "Six chairs · Exhibition spatial concept"
+        }
+      },
+      {
+        "file": "89e73b61adf145ec8cb6932d9ef3dcc3.jpg",
+        "caption": {
+          "zh": "展览宣传图",
+          "en": "Exhibition promotional graphic"
+        }
+      },
+      {
+        "file": "网页预览/The-Chair-回执单-1.jpg",
+        "caption": {
+          "zh": "A5 回执单正面 · 与议题的距离",
+          "en": "A5 visitor card · Relationship to the subject"
+        }
+      },
+      {
+        "file": "网页预览/The-Chair-回执单-2.jpg",
+        "caption": {
+          "zh": "A5 回执单背面 · 留给自己的话",
+          "en": "A5 visitor card · Space for a personal response"
+        }
+      },
+      {
+        "file": "网页预览/The-Chair-结语-1.jpg",
+        "caption": {
+          "zh": "结语展板 · 只是存在，只是尊严",
+          "en": "Closing panel · Presence and dignity"
+        }
+      },
+      {
+        "file": "网页预览/The-Chair-策展与概念-1.jpg",
+        "caption": {
+          "zh": "策展说明 · 科学与人的关系",
+          "en": "Curatorial statement · Science and the person"
+        }
+      },
+      {
+        "file": "网页预览/Wiki-5.2-本地源文件.jpg",
+        "caption": {
+          "zh": "Wiki 5.2 · 生物医学信息获取（本地源文件长图）",
+          "en": "Wiki 5.2 · Access to biomedical information (local-source capture)"
+        }
+      },
+      {
+        "file": "网页预览/Wiki-5.3-本地源文件.jpg",
+        "caption": {
+          "zh": "Wiki 5.3 · 走出校园的线上展览（本地源文件长图）",
+          "en": "Wiki 5.3 · Community access and online exhibition (local-source capture)"
+        }
+      }
+    ],
+    "documents": [
+      {
+        "file": "导语.pdf",
+        "caption": {
+          "zh": "导语展板 PDF",
+          "en": "Opening panel PDF"
+        }
+      },
+      {
+        "file": "结语.pdf",
+        "caption": {
+          "zh": "结语展板 PDF",
+          "en": "Closing panel PDF"
+        }
+      },
+      {
+        "file": "The CHAIR 策展说明与概念图.pdf",
+        "caption": {
+          "zh": "策展说明与概念图 PDF",
+          "en": "Curatorial statement & concept PDF"
+        }
+      },
+      {
+        "file": "A5回执单.pdf",
+        "caption": {
+          "zh": "A5 观众回执单 PDF",
+          "en": "A5 visitor response card PDF"
+        }
+      }
+    ],
+    "links": [
+      {
+        "url": "https://ybhrr180397-alt.github.io/The-Chair/",
+        "label": {
+          "zh": "访问线上展览",
+          "en": "Explore the Online Exhibition"
+        }
+      },
+      {
+        "url": "https://2026.igem.wiki/xjtlu/inclusivity#access-group-2",
+        "label": {
+          "zh": "查看 Wiki 5.2 / 5.3 线上章节",
+          "en": "Read Wiki sections 5.2 / 5.3 online"
+        }
+      }
+    ]
+  },
+  {
+    "name": {
+      "zh": "iGEM XJTLU · Wiki设计",
+      "en": "iGEM XJTLU · Wiki Design"
+    },
+    "type": {
+      "zh": "网页设计 / 跨学科协作",
+      "en": "WEB DESIGN / COLLABORATION"
+    },
+    "icon": "⌘",
+    "date": {
+      "zh": "2025.12 — 至今",
+      "en": "DEC 2025 — PRESENT"
+    },
+    "role": {
+      "zh": "Wiki负责人",
+      "en": "Wiki Lead"
+    },
+    "desc": {
+      "zh": "iGEM（International Genetically Engineered Machine，国际遗传工程机器大赛）是一项面向学生团队的国际合成生物学竞赛。不同专业的成员共同设计、构建和测试生物系统，探索现实问题的解决方案。<br><a href=\"https://competition.igem.org/about/\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:inherit\">了解 iGEM ↗</a><br><br>为跨学科参赛团队搭建信息清晰、视觉统一的项目展示窗口。",
+      "en": "iGEM (International Genetically Engineered Machine) is an international synthetic biology competition for student teams. Members from different disciplines design, build and test biological systems to address real-world challenges.<br><a href=\"https://competition.igem.org/about/\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:inherit\">About iGEM ↗</a><br><br>Creating a clear, visually coherent project website for an interdisciplinary competition team."
+    },
+    "blocks": [
+      [
+        {
+          "zh": "团队与角色",
+          "en": "Team and role"
+        },
+        {
+          "zh": "担任iGEM XJTLU校代表队Wiki负责人。",
+          "en": "Serve as Wiki Lead for the iGEM XJTLU university team."
+        }
+      ],
+      [
+        {
+          "zh": "设计与搭建",
+          "en": "Design and development"
+        },
+        {
+          "zh": "负责团队Wiki页面设计搭建，协同跨学科成员完成参赛项目视觉输出。",
+          "en": "Responsible for Wiki page design and development, working with interdisciplinary teammates on the project’s visual outputs."
+        }
+      ],
+      [
+        {
+          "zh": "协作方式",
+          "en": "Working across disciplines"
+        },
+        {
+          "zh": "围绕团队项目内容推进设计制作与沟通协作。",
+          "en": "Coordinate design production and communication around the team’s project content."
+        }
+      ],
+      [
+        {
+          "zh": "展示资料",
+          "en": "Visual documentation"
+        },
+        {
+          "zh": "下方录屏展示网页效果，可通过“访问 iGEM Wiki”进入正式作品网站。",
+          "en": "The screen recording below demonstrates the website. Use “Visit the iGEM Wiki” to explore the live work."
+        }
+      ]
+    ],
+    "category": "web",
+    "links": [
+      {
+        "url": "https://2026.igem.wiki/xjtlu/#top",
+        "label": {
+          "zh": "访问 iGEM Wiki",
+          "en": "Visit the iGEM Wiki"
+        }
+      }
+    ],
+    "media": [
+      {
+        "file": "wiki.mp4",
+        "video": true,
+        "caption": {
+          "zh": "iGEM Wiki · 网页录屏展示",
+          "en": "iGEM Wiki · Website screen recording"
+        },
+        "poster": "Wiki封面.jpg"
+      }
+    ]
+  },
+  {
+    "name": {
+      "zh": "iGEM 华东交流会 · 活动实践",
+      "en": "iGEM East China Meetup · Event Practice"
+    },
+    "category": "events",
+    "type": {
+      "zh": "活动组织 / 跨校交流",
+      "en": "EVENTS / INTER-UNIVERSITY EXCHANGE"
+    },
+    "date": {
+      "zh": "2026",
+      "en": "2026"
+    },
+    "role": {
+      "zh": "组委会核心成员",
+      "en": "Organising Committee Member"
+    },
+    "icon": "✦",
+    "desc": {
+      "zh": "参与 iGEM 华东地区交流会的筹备与组织，在跨校协作中连接团队与创意。两张现场照片记录活动合影及签到区与现场布置。",
+      "en": "Helped organise the iGEM East China regional meeting, connecting teams through inter-university collaboration. The photographs document the group gathering and the registration-area setup."
+    },
+    "blocks": [
+      [
+        {
+          "zh": "组织与协作",
+          "en": "Organisation & collaboration"
+        },
+        {
+          "zh": "参与活动主办，对接机构争取赞助，统筹协调 40+ 高校参会队伍。",
+          "en": "Helped organise the event, liaised with organisations for sponsorship and coordinated teams from 40+ universities."
+        }
+      ]
+    ],
+    "media": [
+      {
+        "file": "0249bdf6b1258506dda0af6acd354cb1.jpg",
+        "caption": {
+          "zh": "2026 iGEM 华东地区交流会 · 活动合影",
+          "en": "2026 iGEM East China Regional Meeting · Group photograph"
+        }
+      },
+      {
+        "file": "8a7169da9e51017f0ac9e2271a14965b.jpg",
+        "caption": {
+          "zh": "华东交流会 · 签到区与现场布置",
+          "en": "East China Meetup · Registration area and event setup"
+        }
+      }
+    ]
+  },
+  {
+    "name": {
+      "zh": "土楼 · 三维场景建模",
+      "en": "Tulou · 3D Scene Modelling"
+    },
+    "category": "3d",
+    "type": {
+      "zh": "Maya / 三维场景建模 / 渲染",
+      "en": "MAYA / 3D SCENE MODELLING / RENDERING"
+    },
+    "icon": "◇",
+    "date": {
+      "zh": "创作档案",
+      "en": "CREATIVE ARCHIVE"
+    },
+    "role": {
+      "zh": "三维场景建模与渲染",
+      "en": "3D Scene Modelling & Rendering"
+    },
+    "desc": {
+      "zh": "使用 Maya 完成土楼三维场景的建模与渲染。视频呈现场景的最终渲染效果。",
+      "en": "A tulou architectural scene modelled and rendered in Maya. The video presents the final rendered scene."
+    },
+    "blocks": [
+      [
+        {
+          "zh": "制作工具",
+          "en": "Tools"
+        },
+        {
+          "zh": "Autodesk Maya · 场景建模与渲染",
+          "en": "Autodesk Maya · Scene modelling and rendering"
+        }
+      ]
+    ],
+    "media": [
+      {
+        "file": "土楼.mp4",
+        "video": true,
+        "caption": {
+          "zh": "土楼 · Maya 场景渲染展示",
+          "en": "Tulou · Maya scene rendering showcase"
+        },
+        "poster": "土楼封面.png"
+      }
+    ]
+  }
+];
+let workFilter="all";
+const canvas=document.querySelector('#world'),ctx=canvas.getContext('2d');let W=innerWidth,H=innerHeight,DPR=Math.min(devicePixelRatio,2),scale=1,night=true,t=0,last=0,pan={x:0,y:0},pointer={x:0,y:0},reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const player={x:20,z:195,tx:20,tz:195,moving:false};const visited=new Set,positions=[];let currentPlace=null,activeProject=null,frame=0,completionShown=false,completionPending=false;
+function resize(){W=innerWidth;H=innerHeight;DPR=Math.min(devicePixelRatio,2);canvas.width=W*DPR;canvas.height=H*DPR;scale=Math.min(W/1250,H/900);if(W<700)scale=Math.min(W/1020,(H-160)/620);ctx.setTransform(DPR,0,0,DPR,0,0)}addEventListener('resize',resize);resize();
+function P(x,z,y=0){return{x:W*.52+(x*.84-z*.68)*scale+pan.x,y:H*(W<700?.61:.60)+(x*.32+z*.4-y)*scale+pan.y}}function poly(points,fill,stroke){ctx.beginPath();points.forEach((p,i)=>{i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)});ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.stroke()}}
+function line(points,color,width=1){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle=color;ctx.lineWidth=width*scale;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke()}
+function ellipse(x,z,y,rx,ry,color){const p=P(x,z,y);ctx.beginPath();ctx.ellipse(p.x,p.y,rx*scale,ry*scale,0,0,Math.PI*2);ctx.fillStyle=color;ctx.fill()}
+function worldPoly(points,y,fill,stroke){poly(points.map(([x,z])=>P(x,z,y)),fill,stroke)}
+function box(x,z,y,sx,sz,sy,top,front,side){poly([P(x,z,y),P(x+sx,z,y),P(x+sx,z,y+sy),P(x,z,y+sy)],side);poly([P(x+sx,z,y),P(x+sx,z+sz,y),P(x+sx,z+sz,y+sy),P(x+sx,z,y+sy)],front);poly([P(x,z+sz,y),P(x+sx,z+sz,y),P(x+sx,z+sz,y+sy),P(x,z+sz,y+sy)],front);poly([P(x,z,y+sy),P(x+sx,z,y+sy),P(x+sx,z+sz,y+sy),P(x,z+sz,y+sy)],top)}
+function gradient(a,b){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,a);g.addColorStop(1,b);return g}
+const island=[[-410,-240],[-240,-310],[110,-300],[370,-225],[440,-40],[390,180],[210,330],[-80,350],[-345,270],[-450,65]];
+function ground(){const top=night?'#7babc4':'#f1f5e8',face=night?'#54859e':'#b1cbd1';for(let i=0;i<island.length;i++){let a=island[i],b=island[(i+1)%island.length];poly([P(...a,0),P(...b,0),P(b[0]*.87,b[1]*.87,-125),P(a[0]*.87,a[1]*.87,-125)],i%2?face:night?'#3d708e':'#97b9c8');poly([P(a[0]*.87,a[1]*.87,-125),P(b[0]*.87,b[1]*.87,-125),P(b[0]*.55,b[1]*.55,-195),P(a[0]*.55,a[1]*.55,-195)],i%2?(night?'#396480':'#81a8bc'):(night?'#2a5672':'#a0c4d1'))}worldPoly(island,0,top);worldPoly(island.map(([x,z])=>[x*.98,z*.98]),2,night?'#86b1c5':'#f5f5e9');
+// 岛屿边沿的草地、铺路与小石块。
+worldPoly([[-430,50],[-345,255],[-80,330],[10,285],[-215,200],[-290,-20]],3,night?'#80a9a4':'#dcebc9');worldPoly([[210,300],[375,170],[425,-30],[340,0],[295,140],[160,210]],3,night?'#78a6a0':'#dce9c9');
+line([P(-340,-140,5),P(-250,25,5),P(-160,150,5),P(40,195,5),P(260,90,5),P(280,-115,5)],night?'#b3bdab':'#e3dcc5',29);line([P(35,195,6),P(150,235,6)],night?'#b3bdab':'#e3dcc5',28);line([P(-160,150,6),P(-260,230,6)],night?'#b3bdab':'#e3dcc5',26);
+for(let j=0;j<10;j++){const x=-110+j*24;box(x,175+(j%2)*4,5,15,18,3,night?'#bed4d4':'#fffdf2','#cbd9d1','#d7e1d6')}
+}
+function pool(){const rim=[[-200,-202],[155,-202],[205,-145],[205,55],[155,112],[-200,112],[-238,70],[-238,-155]];worldPoly(rim,5,night?'#a7d3de':'#fffef4');const edge=[[-185,-183],[144,-183],[185,-137],[185,47],[144,92],[-185,92],[-216,60],[-216,-146]];worldPoly(edge,7,night?'#3578a1':'#60c8e3');const water=[[-182,-173],[140,-173],[173,-133],[173,40],[138,79],[-182,79],[-205,53],[-205,-138]];ctx.save();poly(water.map(a=>P(...a,8)));ctx.clip();ctx.fillStyle=gradient(night?'#3985b0':'#9ce5f4',night?'#1f658f':'#49b5dc');ctx.fillRect(0,0,W,H);
+for(let i=0;i<20;i++){const z=-200+i*19;const pts=[];for(let x=-230;x<220;x+=10)pts.push(P(x,z+Math.sin(x*.03+t*.7+i)*4,9));line(pts,night?'#b8e7fd24':'#f7ffff6b',1)}
+for(let j=0;j<11;j++){let x=-190+j*33;line([P(x,-180,8),P(x,90,8)],night?'#d9f3ff0a':'#ffffff18',1)}ctx.restore();line(rim.slice(0,3).map(a=>P(...a,9)),night?'#bbdeee':'#fffdf8',3);
+// 梯子与水面中央的漂浮标识。
+for(let n=0;n<2;n++)line([P(175+n*12,-40,0),P(175+n*12,-40,26),P(160+n*12,-40,30),P(154+n*12,-40,15)],night?'#c2e4ec':'#fffef2',3);for(let n=0;n<3;n++)line([P(175,-40,6+n*7),P(187,-40,6+n*7)],'#e9f9ff',2);
+}
+function floatingFrame(x,z,size,color,symbol,index){const bob=reduced?0:Math.sin(t*1.2+index*1.8)*6;ellipse(x,z,10,size*.62,size*.22,night?'#19476c4a':'#1e6d9130');const p=P(x,z,42+bob);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(-.12+Math.sin(t*.5+index)*.035);const s=size*scale;ctx.shadowColor=night?'#77ccff70':'#4276a130';ctx.shadowBlur=18*scale;ctx.fillStyle=night?'#d1e8f1':'#fffdf4';ctx.beginPath();ctx.roundRect(-s*.5,-s*.65,s,s*1.3,5*scale);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle=color;ctx.fillRect(-s*.4,-s*.53,s*.8,s*.85);ctx.fillStyle='#effbff';ctx.textAlign='center';ctx.font=`${size*.53*scale}px Georgia`;ctx.fillText(symbol,0,s*.08);ctx.fillStyle='#52788d';ctx.font=`${6*scale}px monospace`;ctx.fillText(tr('作品 0','PROJECT 0')+(index+1),0,s*.48);ctx.restore()}
+function tree(x,z,h=75,c=0){ellipse(x,z,4,25,10,'#32697318');box(x-3,z-3,3,6,6,h*.67,night?'#77989e':'#b0b9a1',night?'#637e88':'#a9aa8b',night?'#4f6c79':'#c2bd9b');const p=P(x,z,h);ctx.fillStyle=night?(c?'#63969e':'#538f95'):(c?'#a5c4a4':'#85b6a2');ctx.beginPath();ctx.ellipse(p.x,p.y,28*scale,h*.45*scale,-.15,0,Math.PI*2);ctx.fill();ctx.fillStyle=night?'#80aeb0':'#bad5b2';ctx.beginPath();ctx.ellipse(p.x-7*scale,p.y-8*scale,18*scale,h*.3*scale,-.2,0,Math.PI*2);ctx.fill()}
+function bush(x,z){for(let i=0;i<3;i++){let p=P(x+i*10,z+i*2,13+i%2*5);ctx.fillStyle=night?'#76a49f':'#b0c9a0';ctx.beginPath();ctx.arc(p.x,p.y,(12-i)*scale,0,Math.PI*2);ctx.fill()}}
+function cabin(){const x=230,z=-170;ellipse(285,-125,2,95,37,'#264d6e19');box(x-12,z-12,3,133,117,13,night?'#a7bdba':'#ece7d0','#9aafb0','#d8ddcb');box(x,z,16,105,90,98,night?'#b3c9c9':'#f4efdf',night?'#8daab7':'#e2e3d4',night?'#9ab6bc':'#eee9da');const a=P(x-12,z-12,111),b=P(x+117,z-12,111),c=P(x+117,z+102,111),d=P(x-12,z+102,111),e=P(x+52,z-12,164),f=P(x+52,z+102,164);poly([a,e,f,d],night?'#548ead':'#75b9d6');poly([e,b,c,f],night?'#356c90':'#4895bb');line([e,f],'#badde8',2);for(let i=1;i<7;i++)line([P(x-12+i*9,z-12,111+i*7.3),P(x-12+i*9,z+102,111+i*7.3)],'#c6e8ef48',1);box(x+35,z+91,17,33,2,60,night?'#ebce91':'#9cbfc8',night?'#ebce91':'#9cbfc8','#84b3c6');poly([P(x+72,z+91,56),P(x+95,z+91,56),P(x+95,z+91,85),P(x+72,z+91,85)],night?'#ffe0a0':'#8fc9df');line([P(x+83,z+92,56),P(x+83,z+92,85)],'#f6f1da',2);box(x+41,z+97,3,24,13,13,'#f1efdf','#b3c4be','#d5ded0');box(x+70,z-5,134,16,16,40,'#dee5de','#b8cfd0','#ebeddf');if(night){const p=P(280,-100,70);const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,60*scale);g.addColorStop(0,'#ffe0a033');g.addColorStop(1,'#ffe0a000');ctx.fillStyle=g;ctx.fillRect(p.x-60*scale,p.y-60*scale,120*scale,120*scale)}}
+function observatory(){const x=-335,z=-140;box(x-45,z-35,4,88,75,12,night?'#a4c3c9':'#d9e8e5','#8bb6c6','#bed9db');for(let i=0;i<5;i++)box(x-45,z+40+i*11,-i*3,88,12,12,night?'#a4c3c9':'#e7eee3','#91afba','#c1d5d8');box(x-4,z-2,16,8,8,48,'#94c2d2','#6b9daf','#a5c6d1');const a=P(x,z,65),b=P(x+50,z-25,95);line([a,b],night?'#d9eafa':'#e4f1f4',24);line([P(x+48,z-24,94),P(x+57,z-28,99)],'#4681a0',27);const end=P(x+58,z-29,100);ctx.beginPath();ctx.ellipse(end.x,end.y,7*scale,12*scale,-.7,0,Math.PI*2);ctx.fillStyle=night?'#99d6ff':'#4c8cae';ctx.fill();line([P(x,z,17),P(x-27,z+15,16)],'#739daf',5);line([P(x,z,17),P(x+29,z+14,16)],'#739daf',5);line([P(x,z,17),P(x,z-25,16)],'#739daf',5)}
+function lab(){const x=170,z=235;ellipse(x,z,6,72,26,night?'#315b7c':'#dce8db');box(x-47,z-30,5,96,67,12,night?'#96bac5':'#ecebd9','#8db4c4','#d1dbd2');const bob=reduced?0:Math.sin(t)*8;const p=P(x,z,65+bob);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(t*.16);const s=36*scale;poly([{x:0,y:-s},{x:s*.7,y:0},{x:0,y:s},{x:-s*.7,y:0}],night?'#a8c4ff':'#b1b9e8','#e9e6ff');poly([{x:0,y:-s},{x:s*.7,y:0},{x:0,y:s},{x:0,y:0}],night?'#7797e1':'#909fd6');ctx.restore();const q=P(x,z,60+bob);ctx.save();ctx.translate(q.x,q.y);ctx.rotate(-.35);ctx.beginPath();ctx.ellipse(0,0,63*scale,18*scale,0,0,Math.PI*2);ctx.strokeStyle=night?'#d6e7ff':'#9caed0';ctx.lineWidth=2*scale;ctx.stroke();ctx.restore();for(let i=0;i<3;i++){const a=t*.5+i*2.1;const pp=P(x+Math.cos(a)*63,z+Math.sin(a)*30,60+bob+Math.sin(a)*12);ctx.fillStyle='#f8f5da';ctx.beginPath();ctx.arc(pp.x,pp.y,4*scale,0,Math.PI*2);ctx.fill()}}
+function dock(){for(let i=0;i<9;i++)box(-328+i*12,211,4,10,68,7,night?'#b5c6bd':'#d8cdb0','#879fa4','#c9c2aa');box(-282,226,12,32,19,43,night?'#c8dbe6':'#76b9d5','#6194ad','#83bfd6');box(-292,220,55,48,30,7,'#e3edf0','#8eb9cc','#b1d6e0');const p=P(-265,245,42);ctx.fillStyle=night?'#e9e5cb':'#f4f2de';ctx.fillRect(p.x-9*scale,p.y-7*scale,18*scale,12*scale);line([{x:p.x-9*scale,y:p.y-7*scale},{x:p.x,y:p.y},{x:p.x+9*scale,y:p.y-7*scale}],'#719bb0',1);const a=P(-345,250,38);ctx.save();ctx.translate(a.x,a.y);ctx.rotate(-.35+Math.sin(t)*.08);poly([{x:-20*scale,y:0},{x:22*scale,y:-5*scale},{x:0,y:12*scale}],'#fffdf1');poly([{x:0,y:12*scale},{x:8*scale,y:2*scale},{x:-8*scale,y:3*scale}],'#a7d3e6');ctx.restore()}
+function lamp(x,z){box(x,z,5,3,3,39,'#d6e8e8','#91b3bf','#b7cbd0');const p=P(x,z,47);ctx.fillStyle=night?'#ffe4aa':'#f7f2cc';ctx.beginPath();ctx.arc(p.x,p.y,7*scale,0,Math.PI*2);ctx.fill();if(night){const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,40*scale);g.addColorStop(0,'#ffe1a344');g.addColorStop(1,'#ffe1a300');ctx.fillStyle=g;ctx.fillRect(p.x-40*scale,p.y-40*scale,80*scale,80*scale)}}
+function avatar(){const p=P(player.x,player.z,4),walk=player.moving?Math.sin(t*14)*3:0;ellipse(player.x,player.z,4,13,6,'#224c6530');line([P(player.x-4,player.z,8),P(player.x-4,player.z,20+walk)],'#4d7e9d',5);line([P(player.x+5,player.z,8),P(player.x+5,player.z,20-walk)],'#4d7e9d',5);const q=P(player.x,player.z,29);ctx.fillStyle=night?'#f0d397':'#f7e5a8';ctx.beginPath();ctx.roundRect(q.x-10*scale,q.y-9*scale,20*scale,24*scale,6*scale);ctx.fill();const h=P(player.x,player.z,48+Math.abs(walk)*.3);ctx.fillStyle='#f3d4bd';ctx.beginPath();ctx.arc(h.x,h.y,9*scale,0,Math.PI*2);ctx.fill();ctx.fillStyle='#3f6379';ctx.beginPath();ctx.ellipse(h.x,h.y-4*scale,10*scale,7*scale,-.1,Math.PI,Math.PI*2);ctx.fill();line([P(player.x-9,player.z,29),P(player.x-14,player.z,20-walk)],'#f3d4bd',4);line([P(player.x+9,player.z,29),P(player.x+13,player.z,21+walk)],'#f3d4bd',4)}
+const clouds=Array.from({length:16},(_,i)=>({x:((i*317)%1500)/1500,z:((i*197)%900)/900,s:35+(i*31)%90,v:(i%3+1)*.8}));
+function cloud(cx,cy,s,opacity){ctx.save();ctx.globalAlpha=opacity;ctx.fillStyle=night?'#527b9d':'#fff';ctx.beginPath();ctx.ellipse(cx,cy,s*1.45,s*.36,0,0,Math.PI*2);ctx.ellipse(cx-s*.5,cy-s*.15,s*.65,s*.44,0,0,Math.PI*2);ctx.ellipse(cx+s*.28,cy-s*.22,s*.77,s*.48,0,0,Math.PI*2);ctx.fill();ctx.restore()}
+function background(){ctx.fillStyle=gradient(night?'#183b63':'#a7d8f0',night?'#547b9e':'#e0f3f8');ctx.fillRect(0,0,W,H);const sun={x:W*.78,y:H*.18};let g=ctx.createRadialGradient(sun.x,sun.y,0,sun.x,sun.y,180);g.addColorStop(0,night?'#d5e7ff15':'#fff9df7a');g.addColorStop(1,'#ffffff00');ctx.fillStyle=g;ctx.fillRect(sun.x-180,sun.y-180,360,360);ctx.fillStyle=night?'#d9e9f5':'#fff8e4';ctx.beginPath();ctx.arc(sun.x,sun.y,night?19:29,0,Math.PI*2);ctx.fill();if(night){ctx.fillStyle='#24476c';ctx.beginPath();ctx.arc(sun.x+8,sun.y-5,18,0,Math.PI*2);ctx.fill();for(let i=0;i<60;i++){let x=(i*173.2+35)%W,y=(i*117.7+34)%(H*.72);ctx.globalAlpha=.3+Math.sin(t+i)*.2;ctx.fillStyle='#e2f3ff';ctx.fillRect(x,y,i%4===0?2:1,i%4===0?2:1)}ctx.globalAlpha=1}
+clouds.forEach((c,i)=>{let x=(c.x*W+(reduced?0:t*c.v*2))%(W+300)-150;let y=c.z*H;cloud(x,y,c.s*(W<700?.7:1),i%3===0?.65:.27)});
+// 远处的浮岛与风力发电机，为场景提供纵深。
+for(let k=0;k<3;k++){let x=W*(.18+k*.34),y=H*(.39+(k%2)*.03),s=(k===1?22:30)*scale;poly([{x:x-s,y},{x:x+s,y:y-4},{x:x+s*.45,y:y+13},{x:x-s*.2,y:y+26}],night?'#688da333':'#91bdc140');poly([{x:x-s,y},{x:x+s*.2,y:y-12},{x:x+s,y:y-4},{x:x-s*.2,y:y+8}],night?'#8eaeac55':'#b9d7cc80');line([{x,y:y-5},{x,y:y-35}],night?'#cce0e333':'#ffffff80',1);let a=t*.22;for(let b=0;b<3;b++)line([{x,y:y-33},{x:x+Math.cos(a+b*2.094)*13*scale,y:y-33+Math.sin(a+b*2.094)*13*scale}],night?'#cce0e333':'#ffffff99',1)}
+}
+function flowers(x,z){for(let i=0;i<5;i++){let xx=x+(i*11)%29,zz=z+(i*13)%23;line([P(xx,zz,3),P(xx,zz,14)],night?'#81b0a0':'#98b08f',1);const p=P(xx,zz,16);ctx.fillStyle=i%2?'#fff5c8':'#eff8ff';ctx.beginPath();ctx.arc(p.x,p.y,3*scale,0,Math.PI*2);ctx.fill()}}
+function updatePlayer(dt){let vx=player.tx-player.x,vz=player.tz-player.z,d=Math.hypot(vx,vz);player.moving=d>3;if(d>3){let step=Math.min(d,dt*110),nx=player.x+vx/d*step,nz=player.z+vz/d*step;if(inIsland(nx,nz)&&!inPool(nx,nz)){player.x=nx;player.z=nz}else{player.tx=player.x;player.tz=player.z;player.moving=false}}}
+function inPool(x,z){return x>-235&&x<207&&z>-205&&z<120}function inIsland(x,z){let inside=false;for(let i=0,j=island.length-1;i<island.length;j=i++){const a=island[i],b=island[j];if(((a[1]>z)!==(b[1]>z))&&(x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0]))inside=!inside}return inside}
+function render(ms){let dt=Math.min((ms-last)/1000,.05)||0;last=ms;if(!reduced)t+=dt;pan.x+=(pointer.x*7-pan.x)*.035;pan.y+=(pointer.y*4-pan.y)*.035;updatePlayer(dt);ctx.setTransform(DPR,0,0,DPR,0,0);background();ground();pool();const objects=[{d:-450,f:observatory},{d:155,f:cabin},{d:405,f:lab},{d:0,f:dock}];[[-400,10,82],[-360,85,62],[-285,-255,68],[170,-260,80],[375,-70,65],[350,155,70],[-75,310,56],[290,250,58]].forEach(a=>objects.push({d:a[0]+a[1],f:()=>tree(...a,a[0]%2)}));[[-320,170],[-380,-10],[260,-230],[350,105],[90,300]].forEach(a=>objects.push({d:a[0]+a[1],f:()=>bush(...a)}));[[-275,70],[260,40],[60,260],[-220,230]].forEach(a=>objects.push({d:a[0]+a[1],f:()=>lamp(...a)}));[[-285,100],[340,140],[-70,300],[100,-260]].forEach(a=>objects.push({d:a[0]+a[1],f:()=>flowers(...a)}));[[-140,-90,64,'#64afda','◉'],[-30,-120,57,'#8ba6d7','✳'],[90,-40,58,'#72b7b4','◇'],[-60,35,54,'#75b4d3','⌘']].forEach((a,i)=>objects.push({d:a[0]+a[1]+10,f:()=>floatingFrame(...a,i)}));objects.push({d:player.x+player.z,f:avatar});objects.sort((a,b)=>a.d-b.d).forEach(o=>o.f());
+// 浮岛下方的细小水滴与飘散光点。
+for(let i=0;i<7;i++){const p=P(-300+i*92,270-(i%3)*130,-175-((t*14+i*31)%90));ctx.globalAlpha=.2;ctx.fillStyle=night?'#b7e4ff':'#74a9c2';ctx.beginPath();ctx.arc(p.x,p.y,(2+i%3)*scale,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;
+places.forEach((p,i)=>{const pos=P(p.x,p.z,p.h+(W<700?0:5));positions[i]=pos;const el=document.getElementById('label-'+p.id);el.style.left=Math.max(el.offsetWidth/2+10,Math.min(W-el.offsetWidth/2-10,pos.x))+'px';el.style.top=pos.y+'px';});frame=requestAnimationFrame(render)}
+const dialog=document.querySelector('#panel'),body=document.querySelector('#panel-content'),thanks=document.querySelector('#thanks');
+function buildNavigation(){
+ document.querySelector('#labels').innerHTML='';document.querySelector('#map-links').innerHTML='';
+ places.forEach(p=>{const b=document.createElement('button');b.className='place-label'+(visited.has(p.id)?' visited':'');b.id='label-'+p.id;b.setAttribute('aria-label',bi(p.name));b.innerHTML='<span class="label-dot"></span><div><strong>'+bi(p.name)+'</strong><small>'+p.number+'</small></div><span class="arrow">↗</span>';b.onclick=()=>openPlace(p.id);document.querySelector('#labels').append(b);const m=document.createElement('button');m.innerHTML=p.number+' / '+bi(p.name)+'<span>'+tr('进入 ↗','Enter ↗')+'</span>';m.onclick=()=>{openPlace(p.id);document.querySelector('#map').hidden=true;document.querySelector('#map-toggle').setAttribute('aria-expanded','false')};document.querySelector('#map-links').append(m)});
+}
+function updateProgress(){document.querySelector('#count').textContent=visited.size+' / 5';document.querySelector('#progress').style.width=visited.size*20+'%';document.querySelector('#progress-note').textContent=visited.size===5?tr('探索完成，谢谢你来我的世界。','All five places found. Thank you for visiting.'):tr('五个地点，五种认识我的方式。','Five places. Five ways to get to know me.');}
+function updateDay(){document.body.classList.toggle('night',night);document.querySelector('#day-text').textContent=night?tr('夜间','Night'):tr('日间','Day');document.querySelector('.day-icon').textContent=night?'☾':'☀';document.querySelector('#day').setAttribute('aria-label',night?tr('切换到白天','Switch to day'):tr('切换到夜晚','Switch to night'));}
+const bgmAudio=document.querySelector('#bgm'),bgmToggle=document.querySelector('#bgm-toggle');
+bgmAudio.volume=.48;
+function updateMusic(){const playing=!bgmAudio.paused&&!bgmAudio.ended;const label=playing?tr('关闭背景音乐','Turn off background music'):tr('开启背景音乐','Turn on background music');bgmToggle.setAttribute('aria-pressed',String(playing));bgmToggle.setAttribute('aria-label',label);bgmToggle.title=label;}
+bgmAudio.addEventListener('play',updateMusic);bgmAudio.addEventListener('pause',updateMusic);bgmAudio.addEventListener('ended',updateMusic);
+bgmToggle.onclick=async()=>{if(!bgmAudio.paused){bgmAudio.pause();return;}bgmToggle.disabled=true;try{await bgmAudio.play();}catch(error){toast(tr('音乐暂时无法播放，请稍后再试。','Music could not play. Please try again.'));}finally{bgmToggle.disabled=false;updateMusic();}};
+function applyLanguage(){
+ updateMusic();
+ document.documentElement.lang=lang==='zh'?'zh-CN':'en';document.title=tr('晴空之外 · 杨博涵的作品世界','Beyond the Sky · Bohan Yang’s Portfolio');
+ document.querySelector('.brand strong').textContent=tr('晴空之外','Beyond the Sky');document.querySelector('.brand small').textContent=tr('杨博涵 · 数字媒体艺术','BOHAN YANG · DIGITAL MEDIA ART');
+ document.querySelector('.intro .tiny').textContent=tr('欢迎来到我的创作小世界','WELCOME TO MY LITTLE UNIVERSE');
+ document.querySelector('.intro h1').innerHTML=tr('暂时离开地面，<br>来我的<em>想象里</em>逛逛。','Leave the ground.<br>Step into my<br><em>imagination.</em>');
+ document.querySelector('.intro p').innerHTML=tr('我是杨博涵，数字媒体艺术在读。<br>在视觉、影像、三维与交互之间探索。','I’m Bohan, a Digital Media Art student.<br>Exploring visuals, film, 3D and interaction.');
+ document.querySelector('.intro .coord').textContent=tr('云端浮岛 / 让创作连接彼此','SKY ISLAND / CONNECTIONS THROUGH CREATION');
+ document.querySelector('.right-note').innerHTML='<i></i>'+tr('杨博涵的世界 · 欢迎来访','Bohan’s world · Welcome aboard');
+ document.querySelector('.status>div:first-child>span:first-child').textContent=tr('探索进度','EXPLORATION');
+ document.querySelector('.controls').innerHTML='<span>'+tr('点击地面 · 漫步','Click the ground · Wander')+'</span><span>'+tr('点击浮标 · 探索 ↗','Click a marker · Explore ↗')+'</span>';
+ document.querySelector('#map-toggle').innerHTML='<b>⌘</b>'+tr('探索地图','Island map');
+ document.querySelector('.map-heading span:first-child').textContent=tr('岛屿导航','ISLAND DIRECTORY');
+ document.querySelector('#map>p').innerHTML=tr('点击地点进入，也可以按 Tab 选择、回车打开。<br>点击草地，让小小的我散散步。','Choose a place, or use Tab and Enter.<br>Click the grass to take a little walk.');
+ document.querySelector('.help-text').textContent=tr('怎么玩','How to explore');document.querySelector('#help').setAttribute('aria-label',tr('探索说明','How to explore'));
+ document.querySelector('.credits').textContent=tr('因好奇而创造，因相遇而闪亮。','BUILT FROM CURIOSITY. BRIGHTER WITH YOU.');
+ document.querySelector('#world').setAttribute('aria-label',tr('杨博涵的云端浮岛作品集。点击地点或打开地图探索。','Bohan Yang’s floating-island portfolio. Click a place or open the map to explore.'));
+ document.querySelector('#loading span').textContent=tr('正在抵达晴空之外 · · ·','ARRIVING BEYOND THE SKY · · ·');
+ document.querySelector('#close').setAttribute('aria-label',tr('返回岛屿','Return to the island'));
+ document.querySelectorAll('.language-toggle').forEach(b=>{b.textContent=lang==='zh'?'EN':'中文';b.setAttribute('aria-label',lang==='zh'?'Switch to English':'切换为中文')});
+ document.querySelector('#thanks-kicker').textContent=tr('所有地点，已被你点亮','EVERY PLACE, A LITTLE BRIGHTER');
+ document.querySelector('#thanks-title').innerHTML=tr('谢谢你，<br>来到我的小世界。','Thank you<br>for finding your way here.');
+ document.querySelector('#thanks-message').innerHTML=tr('五个地点，一段短短的旅程。<br>很高兴，我的想法曾与你的好奇心相遇。<br>愿你带着一点灵感离开，也欢迎随时回来。','Five places, one little journey.<br>I’m glad my ideas crossed paths with your curiosity.<br>Take a little inspiration with you, and come back anytime.');
+ document.querySelector('#continue').innerHTML=tr('继续探索 <span>↗</span>','Keep exploring <span>↗</span>');
+ document.querySelector('#thanks-close').setAttribute('aria-label',tr('继续探索','Keep exploring'));
+ document.querySelector('#thanks-signature').textContent=tr('杨博涵 · 感谢这次相遇','Bohan Yang · Until our next encounter');
+ updateDay();updateProgress();buildNavigation();if(dialog.open)renderPanel();
+}
+function sectionBlocks(items){return '<div class="detail-blocks">'+items.map(r=>'<div><h3>'+bi(r[0])+'</h3><p>'+bi(r[1])+'</p></div>').join('')+'</div>';}
+
+const workCategories=[['all',{zh:'全部',en:'All'}],['research',{zh:'调研与空间',en:'Research & space'}],['visual',{zh:'视觉与产品',en:'Visual & product'}],['motion',{zh:'影像与交互',en:'Film & interaction'}],['painting',{zh:'绘画',en:'Painting'}],['web',{zh:'网页与展览',en:'Web & exhibitions'}],['events',{zh:'实践与交流',en:'Events & exchange'}],['3d',{zh:'三维场景',en:'3D scenes'}]];
+const assetPath=file=>'过往作品/'+file.split('/').map(encodeURIComponent).join('/');
+function mediaImage(item,cover=false){const crop=item.crop;const style=crop?'aspect-ratio:'+crop.w+'/'+crop.h+';':'';const imageStyle=crop?'width:'+crop.fullW/crop.w*100+'%;height:auto;max-width:none;position:absolute;left:'+(-crop.x/crop.w*100)+'%;top:'+(-crop.y/crop.h*100)+'%;':'';return '<span class="art-image '+(crop?'art-crop':'')+'" style="'+style+'"><img src="'+assetPath(item.file)+'" alt="'+bi(item.caption)+'" loading="lazy" style="'+imageStyle+'"></span>';}
+function workIndex(){const selected=projects.map((p,i)=>({p,i})).filter(({p})=>workFilter==='all'||p.category===workFilter);return '<p class="panel-desc">'+tr('以调研、视觉、影像、绘画与数字体验，记录我不同方向的创作。','Exploring research, visuals, moving images, painting and digital experiences.')+'</p><div class="work-filters" role="group" aria-label="'+tr('作品分类','Work categories')+'">'+workCategories.map(([key,name])=>'<button data-work-filter="'+key+'" aria-pressed="'+(workFilter===key)+'">'+bi(name)+' <small>'+projects.filter(p=>key==='all'||p.category===key).length+'</small></button>').join('')+'</div><div class="project-list">'+selected.map(({p,i})=>{const cover=p.media?.find(a=>!a.video)||p.media?.find(a=>a.poster);return '<button class="project-tile '+(cover?'has-cover':'')+'" data-project="'+i+'">'+(cover?mediaImage(cover.video?{file:cover.poster,caption:cover.caption}:cover,true):'<span class="tile-art">'+p.icon+'</span>')+'<small>'+bi(p.type)+'</small><h3>'+bi(p.name)+'</h3><p>'+bi(p.role)+' ↗</p></button>';}).join('')+'</div>';}
+function wireWorkIndex(){body.querySelectorAll('[data-project]').forEach(b=>b.onclick=()=>projectDetail(+b.dataset.project));body.querySelectorAll('[data-work-filter]').forEach(b=>b.onclick=()=>{workFilter=b.dataset.workFilter;renderPanel();});}
+function workLinks(p){return p.links?'<div class="project-links">'+p.links.map(link=>'<a href="'+link.url+'" target="_blank" rel="noopener noreferrer">'+bi(link.label)+' <span aria-hidden="true">↗</span></a>').join('')+'</div>':'';}
+function workDocuments(p){return p.documents?'<div class="source-documents" aria-label="'+tr('设计原稿','Original design files')+'">'+p.documents.map(d=>'<a href="'+assetPath(d.file)+'" target="_blank" rel="noopener">↗ '+bi(d.caption)+'</a>').join('')+'</div>':'';}
+function workMedia(p){if(!p.media)return '';return '<div class="project-gallery">'+p.media.map((item,i)=>'<figure>'+(item.video?'<video controls playsinline preload="metadata" '+(item.poster?'poster="'+assetPath(item.poster)+'" ':'')+'src="'+assetPath(item.file)+'" aria-label="'+bi(item.caption)+'"></video>':'<button class="image-enlarge" data-art="'+i+'" aria-label="'+tr('放大：','Enlarge: ')+bi(item.caption)+'">'+mediaImage(item)+'<span class="zoom-hint">'+tr('点击放大 ↗','Enlarge ↗')+'</span></button>')+'<figcaption><span>'+String(i+1).padStart(2,'0')+'</span>'+bi(item.caption)+'</figcaption></figure>').join('')+'</div>';}
+function openArt(index){const item=projects[activeProject].media[index];const v=document.querySelector('#art-viewer');v.querySelector('.art-view-content').innerHTML=mediaImage(item)+'<p>'+bi(item.caption)+'</p>';v.querySelector('button').setAttribute('aria-label',tr('关闭大图','Close image'));v.showModal();}
+
+function renderPanel(){
+ const p=places.find(p=>p.id===currentPlace);document.querySelector('#panel-location').textContent=tr('地点 ','LOCATION ')+p.number+' / '+(lang==='zh'?bi(p.name):p.en);
+ if(activeProject!==null){renderProject(activeProject);return;}
+ const head='<div class="panel-eyebrow">'+tr('杨博涵的创作档案',p.en)+'</div><h2 id="panel-title">'+bi(p.name)+'</h2>';
+ if(currentPlace==='works'){body.innerHTML=head+workIndex();wireWorkIndex();}
+ if(currentPlace==='about')body.innerHTML=head+'<p class="panel-desc">'+tr('你好，我是杨博涵，西交利物浦大学数字媒体艺术专业本科在读。我在视觉设计、影像创作、三维空间与网页交互之间探索，喜欢把一个想法从概念推进到可以被看见、被体验的作品。<br><br>从《The Chair》的实体展与线上延伸，到iGEM团队的Wiki设计，我希望用设计把不同领域、不同的人连接起来。','Hello, I’m Bohan Yang, an undergraduate in Digital Media Art at Xi’an Jiaotong-Liverpool University. I explore visual design, filmmaking, 3D spaces and web interaction, taking ideas from concepts into work people can see and experience.<br><br>From The Chair’s physical exhibition and online extension to the iGEM team’s Wiki, I use design to connect people and disciplines.')+'</p>'+sectionBlocks([
+ [{zh:'教育与关注',en:'Education & interests'},{zh:'西交利物浦大学 · 数字媒体艺术<br>2024.09 — 2028.06（预计）<br>视觉设计、三维建模、影像制作、交互设计、新媒体传播。',en:'Xi’an Jiaotong-Liverpool University · Digital Media Art<br>SEP 2024 — JUN 2028 (expected)<br>Visual design, 3D modelling, film production, interaction design and new media communication.'}],
+ [{zh:'视觉与影像工具箱',en:'Visual & film toolkit'},{zh:'Photoshop、Illustrator、Premiere Pro、After Effects。<br>海报、品牌视觉、界面设计、视频剪辑、调色与特效。',en:'Photoshop, Illustrator, Premiere Pro and After Effects.<br>Posters, brand visuals, interface design, editing, colour grading and effects.'}],
+ [{zh:'三维与创意开发',en:'3D & creative development'},{zh:'Unreal Engine、Maya：产品建模、场景搭建与视觉优化。<br>使用AI辅助设计、内容创作、网页与交互原型开发。',en:'Unreal Engine and Maya: product modelling, scene building and visual refinement.<br>AI-assisted design, content creation, websites and interactive prototypes.'}],
+ [{zh:'协作与现场实践',en:'Collaboration & production'},{zh:'展览策划与落地、跨团队协作、活动统筹与新媒体内容制作。<br>具备导演、摄影、灯光、摄影助理与场记等学生剧组实践经验；英语熟练。',en:'Exhibition planning and delivery, cross-team collaboration, event coordination and new media production.<br>Student film-crew experience in directing, cinematography, lighting, camera assistance and script supervision; proficient in English.'}]
+ ])+'<p class="placeholder-note">'+tr('对我来说，创作不止一种媒介，也不止一种可能。','For me, creation has more than one medium, and more than one possibility.')+'</p>';
+ if(currentPlace==='journey'){
+ const rows=[
+ ['2024.09 — 2028.06',{zh:'西交利物浦大学 · 数字媒体艺术',en:'XJTLU · Digital Media Art'},{zh:'本科在读，2028年6月预计毕业；学习视觉设计、三维建模、影像制作与交互设计。',en:'Undergraduate, expected to graduate in June 2028. Studies include visual design, 3D modelling, film production and interaction design.'}],
+ [{zh:'2026.03 — 至今',en:'MAR 2026 — PRESENT'},{zh:'未来教育学院 · 市场部实习生',en:'Academy of Future Education · Marketing Intern'},{zh:'负责品牌宣传物料设计、活动影像拍摄与剪辑；协助微信公众号、视频号和小红书内容制作，并参与活动现场执行。',en:'Design brand and promotional materials, shoot and edit event footage, support WeChat and Xiaohongshu content, and assist with on-site event delivery.'}],
+ ['2025.06.23 — 2025.07.23',{zh:'北京捷成华视网聚 · 营销部实习生',en:'Beijing Jetsen Huashi Wangju · Marketing Intern'},{zh:'参与宣传片、展映短视频、海报与长图制作，整理影视营销素材，协助展会与商务推介活动传播。',en:'Produced promotional films, screening shorts, posters and visual materials; organised film-marketing assets and supported exhibition and business-event communication.'}],
+ ['2026.05 — 2026.07',{zh:'iGEM华东地区交流会 · 组委会核心成员',en:'iGEM East China Meetup · Organising Committee'},{zh:'参与活动主办，对接机构争取赞助，统筹协调40+高校参会队伍。',en:'Helped organise the event, liaised with organisations for sponsorship and coordinated participating teams from 40+ universities.'}],
+ [{zh:'2025.12 — 至今',en:'DEC 2025 — PRESENT'},{zh:'iGEM XJTLU · Wiki负责人',en:'iGEM XJTLU · Wiki Lead'},{zh:'负责团队Wiki页面设计搭建，与跨学科成员共同完成参赛项目视觉输出。',en:'Lead Wiki page design and development, collaborating with interdisciplinary teammates on visual outputs.'}],
+ [{zh:'项目亮点',en:'PROJECT HIGHLIGHTS'},{zh:'展览、创新与国际交流',en:'Exhibitions, innovation & exchange'},{zh:'《The Chair》策划与数字化延伸；屋顶花园自主调研获美丽中国一等奖，社会创新项目获文明文化一等奖；AI创业项目一等奖；APIC-iGEM环太平洋国际交流会志愿实践。',en:'The Chair exhibition and digital extension; Beautiful China First Prize for the rooftop garden research and Culture and Civilization First Prize for the social innovation project; first prize in an AI venture project; volunteer experience at the APIC-iGEM Pacific international exchange event.'}]
+ ];
+ body.innerHTML=head+'<p class="panel-desc">'+tr('把设计带到真实的场景里，在每次实践中学习新的连接方式。','Taking design into real contexts, and learning new ways to connect through practice.')+'</p>'+rows.map(r=>'<div class="timeline-row"><span>'+bi(r[0])+'</span><div><h3>'+bi(r[1])+'</h3><p>'+bi(r[2])+'</p></div></div>').join('');
+ }
+ if(currentPlace==='lab')body.innerHTML=head+'<p class="panel-desc">'+tr('正在使用 Arduino 电子元件制作更多交互装置，也在使用 Unreal Engine 建立更多场景。','I am using Arduino and electronic components to create more interactive installations, and Unreal Engine to build more scenes.')+'</p>'+sectionBlocks([
+ [{zh:'进行中 / Unreal Engine × 场景搭建',en:'IN PROGRESS / Unreal Engine × scene building'},{zh:'正在使用 Unreal Engine 建立更多场景，继续探索三维空间与场景表达。',en:'I am building more scenes in Unreal Engine, continuing to explore 3D spaces and scene design.'}],
+ [{zh:'进行中 / Arduino × 交互装置',en:'IN PROGRESS / Arduino × interactive installations'},{zh:'把交互从屏幕带到实体空间，在电子元件与创意编程之间探索新的体验。更多作品与制作过程将陆续在这里分享。',en:'Bringing interaction from the screen into physical space, exploring new experiences through electronic components and creative coding. More work and process documentation will be shared here.'}]
+ ]);
+ if(currentPlace==='contact')body.innerHTML=head+'<p class="panel-desc">'+tr('关于视觉、影像、三维、展览或交互，如果你有一个想法想聊聊，欢迎给我来信。很高兴，我们在这里相遇。','Have an idea about visuals, film, 3D, exhibitions or interaction? I’d love to hear it. I’m glad our paths crossed here.')+'</p><div class="contact-card"><strong>'+bi(PROFILE.name)+'</strong><br>'+tr('邮箱','Email')+'：<a href="mailto:'+PROFILE.email+'">'+PROFILE.email+'</a><br>'+tr('电话','Phone')+'：<a href="tel:+8615811380397">'+PROFILE.phone+'</a><br>'+tr('方向：视觉设计 / 影像 / 三维 / 网页与展览','Focus: Visual design / Film / 3D / Web & exhibitions')+'</div><p class="placeholder-note">'+tr('保持好奇，期待下一次有趣的合作。','Stay curious. Here’s to the next interesting collaboration.')+'</p>';
+}
+function renderProject(i){const p=projects[i];body.innerHTML='<button class="back-link" id="back-projects">'+tr('← 返回作品','← Back to works')+'</button><div class="panel-eyebrow">'+bi(p.type)+' / '+bi(p.date)+'</div><h2 id="panel-title">'+bi(p.name)+'</h2><p class="project-role">'+bi(p.role)+'</p><p class="panel-desc">'+bi(p.desc)+'</p>'+workLinks(p)+sectionBlocks(p.blocks||[])+workDocuments(p)+workMedia(p)+(p.media?'':'<p class="placeholder-note">'+tr('项目图片、视频与正式链接，待补充。','Project images, videos and links will be added later.')+'</p>');document.querySelector('#back-projects').onclick=()=>{body.querySelectorAll('video').forEach(v=>v.pause());activeProject=null;renderPanel();dialog.scrollTop=0};body.querySelectorAll('[data-art]').forEach(b=>b.onclick=()=>openArt(+b.dataset.art));}
+function openPlace(id){currentPlace=id;activeProject=null;if(!visited.has(id)){visited.add(id);updateProgress();document.querySelector('#label-'+id).classList.add('visited');if(visited.size===5&&!completionShown){completionPending=true}}renderPanel();if(!dialog.open)dialog.showModal();dialog.scrollTop=0;}
+function projectDetail(i){activeProject=i;renderProject(i);dialog.scrollTop=0;}
+document.querySelector('#close').onclick=()=>{dialog.querySelectorAll('video').forEach(v=>v.pause());dialog.close();if(completionPending&&!completionShown){completionPending=false;completionShown=true;thanks.showModal();}};
+dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});
+dialog.addEventListener('close',()=>{body.querySelectorAll('video').forEach(v=>v.pause());if(!thanks.open)document.querySelector('#label-'+currentPlace)?.focus();});
+thanks.addEventListener('close',()=>{if(!dialog.open)document.querySelector('#label-'+currentPlace)?.focus();});
+function continueExploring(){thanks.close();if(dialog.open)document.querySelector('#close').focus();}
+document.querySelector('#continue').onclick=continueExploring;document.querySelector('#thanks-close').onclick=continueExploring;
+document.querySelectorAll('.language-toggle').forEach(b=>b.onclick=()=>{lang=lang==='zh'?'en':'zh';document.querySelector('#toast').classList.remove('show');applyLanguage();});
+let toastTimer;function toast(msg){clearTimeout(toastTimer);let el=document.querySelector('#toast');el.textContent=msg;el.classList.add('show');toastTimer=setTimeout(()=>el.classList.remove('show'),5000)}
+document.querySelector('#help').onclick=()=>toast(tr('点击浮标或打开地图探索；点击草地，让小人散步。探索五个地点后，还有一份小小的感谢。','Click a marker or open the map to explore. Click the grass to wander. Visit all five places for a little thank-you.'));
+document.querySelector('#day').onclick=()=>{night=!night;updateDay();};
+document.querySelector('#map-toggle').onclick=()=>{const map=document.querySelector('#map');map.hidden=!map.hidden;document.querySelector('#map-toggle').setAttribute('aria-expanded',String(!map.hidden))};
+canvas.addEventListener('pointermove',e=>{pointer.x=(e.clientX/W-.5)*2;pointer.y=(e.clientY/H-.5)*2});canvas.addEventListener('pointerleave',()=>{pointer.x=0;pointer.y=0});canvas.addEventListener('click',e=>{let sx=(e.clientX-W*.52-pan.x)/scale,sy=(e.clientY-H*(W<700?.61:.60)-pan.y)/scale;const x=(sx*.4+sy*.68)/.5536,z=(sy*.84-sx*.32)/.5536;if(inIsland(x,z)&&!inPool(x,z)){player.tx=x;player.tz=z}else if(inPool(x,z)){openPlace('works')}});
+addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelector('#map').hidden=true;document.querySelector('#map-toggle').setAttribute('aria-expanded','false')}});
+document.addEventListener('visibilitychange',()=>{last=performance.now()});
+applyLanguage();requestAnimationFrame(render);requestAnimationFrame(()=>document.querySelector('#loading').classList.add('done'));
+
+</script></body></html>
